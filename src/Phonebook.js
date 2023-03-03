@@ -5,7 +5,7 @@ import {
   addPerson,
   deletePersonById,
   updatePerson,
-} from "./api/Api.js";
+} from "./api/ApiPhonebook.js";
 
 import { ErrorMessage, DispatchMessage } from "./lib/Message.js";
 

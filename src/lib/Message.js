@@ -16,14 +16,14 @@ class ErrorMessage extends Message {
 }
 
 class DispatchMessage extends Message {
-    class = "dispatch-message";
-    constructor(name){
-        super();
-        this._name = name;
-    }
-    getDescription() {
-        return `Added ${this._name}`;
-    }
+  class = "dispatch-message";
+  constructor(name) {
+    super();
+    this._name = name;
+  }
+  getDescription() {
+    return `Added ${this._name}`;
+  }
 }
 
 export { ErrorMessage, DispatchMessage };

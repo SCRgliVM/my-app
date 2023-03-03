@@ -1,4 +1,4 @@
-import { Error404 } from '../lib/Errors.js';
+import { Error404 } from "../lib/Errors.js";
 
 const apiURL = "http://localhost:3001/persons";
 
