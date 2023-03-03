@@ -1,3 +1,5 @@
+import { Error404 } from '../lib/Errors.js';
+
 const apiURL = "http://localhost:3001/persons";
 
 function getAllPersons() {
@@ -8,7 +10,7 @@ function getAllPersons() {
 
 function addPerson(newPerson) {
   return fetch(apiURL, {
-    method: "post",
+    method: "POST",
     body: JSON.stringify(newPerson),
     headers: { "Content-Type": "application/json" },
   }).then((response) => {
@@ -16,4 +18,19 @@ function addPerson(newPerson) {
   });
 }
 
-export { getAllPersons, addPerson };
+function deletePersonById(personId) {
+  return fetch(`${apiURL}/${personId}`, { method: "DELETE" });
+}
+
+function updatePerson(newPerson) {
+  return fetch(`${apiURL}/${newPerson.id}`, {
+    method: "PUT",
+    body: JSON.stringify(newPerson),
+    headers: { "Content-Type": "application/json" },
+  }).then((response) => {
+    if (response.status === 404) throw new Error404();
+    return response.json();
+  });
+}
+
+export { getAllPersons, addPerson, deletePersonById, updatePerson };
