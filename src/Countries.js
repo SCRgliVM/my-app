@@ -38,7 +38,9 @@ class Countries {
     return this._countries.length;
   }
   filter(query) {
-    return this._countries.filter((country) => country.name.toLowerCase().includes(query.toLowerCase()));
+    return this._countries.filter((country) =>
+      country.name.toLowerCase().includes(query.toLowerCase())
+    );
   }
 }
 
@@ -58,14 +60,20 @@ const Search = ({ query, setQuery }) => {
 const CountryInformation = ({ country }) => {
   return (
     <>
-        <h1>{country.name}</h1>
-        <p>capital: {country.capital}</p>
-        <p>area: {country.area}</p>
-        <h2>languages:</h2>
-        <ul>
-            {country.languages.map(language => <li key={language}>{language}</li>)}
-        </ul>
-        <img src={country.flag} alt="flag" style={ { border: "1px solid black",maxWidth: 200, maxHeight:200 }}/>
+      <h1>{country.name}</h1>
+      <p>capital: {country.capital}</p>
+      <p>area: {country.area}</p>
+      <h2>languages:</h2>
+      <ul>
+        {country.languages.map((language) => (
+          <li key={language}>{language}</li>
+        ))}
+      </ul>
+      <img
+        src={country.flag}
+        alt="flag"
+        style={{ border: "1px solid black", maxWidth: 200, maxHeight: 200 }}
+      />
     </>
   );
 };
@@ -74,29 +82,33 @@ const TooManyMatches = () => {
   return <p>too many matches, specify another filter</p>;
 };
 
-const CountriesList = ({ countryNames }) => {
+const CountriesList = ({ countries, setChoosenCountry }) => {
   return (
     <ul>
-      {countryNames.map((countryName) => (
-        <li key={countryName.id}>{countryName.name}</li>
+      {countries.map((country) => (
+        <li key={country.id}>
+          {country.name}{" "}
+          <button onClick={() => setChoosenCountry(country)}>show</button>
+        </li>
       ))}
     </ul>
   );
 };
 
 const FoundInformation = ({ foundCountries }) => {
+  const [choosenCountry, setChoosenCountry] = useState(null);
+
   if (foundCountries === null) return <p>Loading...</p>;
+
+  if (choosenCountry !== null)
+    return <CountryInformation country={choosenCountry} />;
 
   if (foundCountries.length > 10) return <TooManyMatches />;
   if (foundCountries.length > 1)
     return (
       <CountriesList
-        countryNames={foundCountries.map((country) => {
-          return {
-            id: country.id,
-            name: country.name,
-          };
-        })}
+        setChoosenCountry={setChoosenCountry}
+        countries={foundCountries}
       />
     );
   if (foundCountries.length === 1)
